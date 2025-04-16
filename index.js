@@ -27,7 +27,7 @@ app.get(`/api/smoothies`, async (req, res) => {
 app.get("/api/smoothies/:id", async (req, res) => {
   const { id } = req.params
 
-  const { data, error } = await supabase.from("smoothies").select().eq("id", id).single()
+  const { data, error } = await supabase.from("smoothies").select().eq("id", id).limit(1)
 
   if (error) {
     console.error(error)

@@ -1,0 +1,4 @@
+.env
+.vercel
+/.idea
+node_modules

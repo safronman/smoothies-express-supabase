@@ -10,5 +10,5 @@
     "moduleResolution": "node",
     "outDir": "dist",
   },
-  "include": ["**/*.ts"]
+  "include": ["src/**/*.ts", "env.d.ts"]
 }

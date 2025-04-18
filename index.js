@@ -97,6 +97,54 @@ app.delete("/api/smoothies/:id", async (req, res) => {
   res.status(200).send({ message: "Smoothie deleted successfully" })
 })
 
+// Регистрация нового пользователя
+app.post("/api/signup", async (req, res) => {
+  const { email, password } = req.body
+
+  if (!email || !password === undefined) {
+    return res.status(400).json({ error: "Missing required fields" })
+  }
+
+  const { data, error } = await supabase.auth.signUp({ email, password })
+
+  if (error) {
+    console.error(error)
+    return res.status(500).json({ error: error.message })
+  }
+
+  res.status(201).json(data)
+})
+
+// Логинизация
+app.post("/api/signin", async (req, res) => {
+  const { email, password } = req.body
+
+  if (!email || !password === undefined) {
+    return res.status(400).json({ error: "Missing required fields" })
+  }
+
+  const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+  if (error) {
+    console.error(error)
+    return res.status(500).json({ error: error.message })
+  }
+
+  res.status(200).json("Вы успешно залогинились")
+})
+
+// Логаут
+app.post("/api/signout", async (req, res) => {
+  const { error } = await supabase.auth.signOut()
+
+  if (error) {
+    console.error(error)
+    return res.status(500).json({ error: error.message })
+  }
+
+  res.status(200).json("Вы успешно вылогинились")
+})
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`)
 })

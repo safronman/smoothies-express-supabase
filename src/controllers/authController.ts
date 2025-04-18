@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { handleError } from "../common/handleError"
-import { supabase } from "../supabaseClient"
+import { supabase } from "../common/supabaseClient"
 
 export const signUpUser = async (req: Request, res: Response) => {
   const { email, password } = req.body

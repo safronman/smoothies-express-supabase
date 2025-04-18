@@ -1,4 +1,4 @@
-import { supabase } from "../supabaseClient"
+import { supabase } from "../common/supabaseClient"
 import { handleError } from "../common/handleError"
 import { Request, Response } from "express"
 

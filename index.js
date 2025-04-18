@@ -1,24 +1,21 @@
 import express from "express"
-import dotenv from "dotenv"
-import { createClient } from "@supabase/supabase-js"
-
-dotenv.config()
+import { supabase } from "./supabaseClient.js"
 
 const app = express()
 const port = process.env.PORT || 3000
 
 app.use(express.json())
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)
+const handleError = (res, error) => {
+  console.error(error)
+  return res.status(500).json({ error: error.message })
+}
 
 // Получить все смузи
 app.get(`/api/smoothies`, async (req, res) => {
   const { data, error } = await supabase.from("smoothies").select().order("id", { ascending: false })
 
-  if (error) {
-    console.error(error)
-    return res.status(500).json({ error: error.message })
-  }
+  if (error) return handleError(res, error)
 
   res.json(data)
 })
@@ -29,12 +26,9 @@ app.get("/api/smoothies/:id", async (req, res) => {
 
   const { data, error } = await supabase.from("smoothies").select().eq("id", id).limit(1)
 
-  if (error) {
-    console.error(error)
-    return res.status(500).json({ error: error.message })
-  }
+  if (error) return handleError(res, error)
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return res.status(404).json({ error: "Smoothie not found" })
   }
 
@@ -45,16 +39,13 @@ app.get("/api/smoothies/:id", async (req, res) => {
 app.post("/api/smoothies", async (req, res) => {
   const { title, method, rating } = req.body
 
-  if (!title || !method || rating === undefined) {
+  if (!title || !method || !rating) {
     return res.status(400).json({ error: "Missing required fields" })
   }
 
   const { data, error } = await supabase.from("smoothies").insert([{ title, method, rating }]).select().single()
 
-  if (error) {
-    console.error(error)
-    return res.status(500).json({ error: error.message })
-  }
+  if (error) return handleError(res, error)
 
   res.status(201).json(data)
 })
@@ -64,6 +55,10 @@ app.put("/api/smoothies/:id", async (req, res) => {
   const { id } = req.params
   const { title, method, rating } = req.body
 
+  if (!title || !method || !rating) {
+    return res.status(400).json({ error: "Missing required fields" })
+  }
+
   const { data, error } = await supabase
     .from("smoothies")
     .update({ title, method, rating })
@@ -71,10 +66,7 @@ app.put("/api/smoothies/:id", async (req, res) => {
     .select()
     .single()
 
-  if (error) {
-    console.error(error)
-    return res.status(500).json({ error: error.message })
-  }
+  if (error) return handleError(res, error)
 
   if (!data) {
     return res.status(404).json({ error: "Smoothie not found or not updated" })
@@ -89,10 +81,7 @@ app.delete("/api/smoothies/:id", async (req, res) => {
 
   const { error } = await supabase.from("smoothies").delete().eq("id", id)
 
-  if (error) {
-    console.error(error)
-    return res.status(500).json({ error: error.message })
-  }
+  if (error) return handleError(res, error)
 
   res.status(200).send({ message: "Smoothie deleted successfully" })
 })
@@ -101,16 +90,13 @@ app.delete("/api/smoothies/:id", async (req, res) => {
 app.post("/api/signup", async (req, res) => {
   const { email, password } = req.body
 
-  if (!email || !password === undefined) {
+  if (!email || !password) {
     return res.status(400).json({ error: "Missing required fields" })
   }
 
   const { data, error } = await supabase.auth.signUp({ email, password })
 
-  if (error) {
-    console.error(error)
-    return res.status(500).json({ error: error.message })
-  }
+  if (error) return handleError(res, error)
 
   res.status(201).json(data)
 })
@@ -125,24 +111,18 @@ app.post("/api/signin", async (req, res) => {
 
   const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-  if (error) {
-    console.error(error)
-    return res.status(500).json({ error: error.message })
-  }
+  if (error) return handleError(res, error)
 
-  res.status(200).json("Вы успешно залогинились")
+  res.status(200).json({ message: "Вы успешно залогинились" })
 })
 
 // Логаут
 app.post("/api/signout", async (req, res) => {
   const { error } = await supabase.auth.signOut()
 
-  if (error) {
-    console.error(error)
-    return res.status(500).json({ error: error.message })
-  }
+  if (error) return handleError(res, error)
 
-  res.status(200).json("Вы успешно вылогинились")
+  res.status(200).json({ message: "Вы успешно вылогинились" })
 })
 
 app.listen(port, () => {

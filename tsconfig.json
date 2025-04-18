@@ -6,7 +6,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "dist"
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "outDir": "dist",
   },
-  "include": ["api", "lib"]
+  "include": ["api", "lib", "routes", "controllers", "common", "types", "env.d.ts"]
 }

@@ -1,12 +1,12 @@
-import express from "express"
-import smoothiesRoutes from "./routes/smoothies.js"
-import authRoutes from "./routes/auth.js"
 import dotenv from "dotenv"
+import express, { type Application } from "express"
+import authRoutes from "./routes/auth"
+import smoothiesRoutes from "./routes/smoothies"
 
 dotenv.config()
 
-const app = express()
-const port = process.env.PORT || 3000
+const app: Application = express()
+const port = process.env.PORT ? Number(process.env.PORT) : 3000
 
 app.use(express.json())
 

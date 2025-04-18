@@ -1,13 +1,13 @@
-import express from "express"
+import { Router } from "express"
 import {
+  createSmoothie,
+  deleteSmoothie,
   getAllSmoothies,
   getSmoothieById,
-  createSmoothie,
   updateSmoothie,
-  deleteSmoothie,
-} from "../controllers/smoothiesController.js"
+} from "../controllers/smoothiesController"
 
-const router = express.Router()
+const router = Router()
 
 router.get("/", getAllSmoothies)
 router.get("/:id", getSmoothieById)

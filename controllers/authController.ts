@@ -1,6 +1,8 @@
-import { supabase } from "../supabaseClient.js"
+import { Request, Response } from "express"
+import { handleError } from "../common/handleError"
+import { supabase } from "../supabaseClient"
 
-export const signUpUser = async (req, res) => {
+export const signUpUser = async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   if (!email || !password) {
@@ -16,7 +18,7 @@ export const signUpUser = async (req, res) => {
   res.status(201).json(data)
 }
 
-export const signInUser = async (req, res) => {
+export const signInUser = async (req: Request, res: Response) => {
   const { email, password } = req.body
 
   if (!email || !password === undefined) {
@@ -32,7 +34,7 @@ export const signInUser = async (req, res) => {
   res.status(200).json({ message: "Вы успешно залогинились" })
 }
 
-export const signOutUser = async (req, res) => {
+export const signOutUser = async (req: Request, res: Response) => {
   const { error } = await supabase.auth.signOut()
 
   if (error) {

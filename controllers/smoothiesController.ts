@@ -1,7 +1,8 @@
-import { supabase } from "../supabaseClient.js"
-import { handleError } from "../common/handleError.js"
+import { supabase } from "../supabaseClient"
+import { handleError } from "../common/handleError"
+import { Request, Response } from "express"
 
-export const getAllSmoothies = async (req, res) => {
+export const getAllSmoothies = async (req: Request, res: Response) => {
   const { data, error } = await supabase.from("smoothies").select().order("id", { ascending: false })
 
   if (error) {
@@ -11,7 +12,7 @@ export const getAllSmoothies = async (req, res) => {
   res.json(data)
 }
 
-export const getSmoothieById = async (req, res) => {
+export const getSmoothieById = async (req: Request, res: Response) => {
   const { id } = req.params
   const { data, error } = await supabase.from("smoothies").select().eq("id", id).limit(1)
 
@@ -26,7 +27,7 @@ export const getSmoothieById = async (req, res) => {
   res.json(data[0])
 }
 
-export const createSmoothie = async (req, res) => {
+export const createSmoothie = async (req: Request, res: Response) => {
   const { title, method, rating } = req.body
 
   if (!title || !method || !rating) {
@@ -42,7 +43,7 @@ export const createSmoothie = async (req, res) => {
   res.status(201).json(data)
 }
 
-export const updateSmoothie = async (req, res) => {
+export const updateSmoothie = async (req: Request, res: Response) => {
   const { id } = req.params
   const { title, method, rating } = req.body
 
@@ -68,7 +69,7 @@ export const updateSmoothie = async (req, res) => {
   res.json(data)
 }
 
-export const deleteSmoothie = async (req, res) => {
+export const deleteSmoothie = async (req: Request, res: Response) => {
   const { id } = req.params
 
   const { error } = await supabase.from("smoothies").delete().eq("id", id)

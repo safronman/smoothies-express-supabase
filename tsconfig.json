@@ -10,5 +10,5 @@
     "moduleResolution": "node",
     "outDir": "dist",
   },
-  "include": ["api", "lib", "routes", "controllers", "common", "types", "env.d.ts"]
+  "include": ["**/*.ts"]
 }

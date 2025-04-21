@@ -1,3 +1,4 @@
+import "./common/types"
 import dotenv from "dotenv"
 import express, { type Application } from "express"
 import { corsOptions } from "./common/corsOptions"

@@ -3,7 +3,13 @@ import { handleError } from "../common/handleError"
 import { Request, Response } from "express"
 
 export const getAllSmoothies = async (req: Request, res: Response) => {
-  const { data, error } = await supabase.from("smoothies").select().order("id", { ascending: false })
+  const user = req.user
+
+  const { data, error } = await supabase
+    .from("smoothies")
+    .select()
+    .eq("user_id", user?.id)
+    .order("id", { ascending: false })
 
   if (error) {
     return handleError(res, error)
@@ -29,12 +35,17 @@ export const getSmoothieById = async (req: Request, res: Response) => {
 
 export const createSmoothie = async (req: Request, res: Response) => {
   const { title, method, rating } = req.body
+  const user = req.user
 
   if (!title || !method || !rating) {
     return res.status(400).json({ error: "Missing required fields" })
   }
 
-  const { data, error } = await supabase.from("smoothies").insert([{ title, method, rating }]).select().single()
+  const { data, error } = await supabase
+    .from("smoothies")
+    .insert([{ title, method, rating, user_id: user?.id }])
+    .select()
+    .single()
 
   if (error) {
     return handleError(res, error)

@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { requireAuth } from "../common/requireAuth"
 import {
   createSmoothie,
   deleteSmoothie,
@@ -8,6 +9,8 @@ import {
 } from "../controllers/smoothiesController"
 
 const router = Router()
+
+router.use(requireAuth) // защита всех маршрутов
 
 router.get("/", getAllSmoothies)
 router.get("/:id", getSmoothieById)

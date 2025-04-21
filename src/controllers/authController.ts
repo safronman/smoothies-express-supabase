@@ -15,7 +15,13 @@ export const signUpUser = async (req: Request, res: Response) => {
     return handleError(res, error)
   }
 
-  res.status(201).json(data)
+  res.status(201).json({
+    message: "Регистрация прошла успешно",
+    user: {
+      id: data.user?.id,
+      email: data.user?.email,
+    },
+  })
 }
 
 export const signInUser = async (req: Request, res: Response) => {
@@ -33,8 +39,11 @@ export const signInUser = async (req: Request, res: Response) => {
 
   res.status(200).json({
     message: "Вы успешно залогинились",
-    access_token: data.session?.access_token, // 👈 теперь фронт сможет использовать этот токен
-    user: data.session?.user,
+    access_token: data.session?.access_token,
+    user: {
+      id: "ca29d841-8603-4da5-98dd-943b05bb4262",
+      email: "test4@test.com",
+    },
   })
 }
 

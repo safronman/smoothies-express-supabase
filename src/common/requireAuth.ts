@@ -17,5 +17,5 @@ export const requireAuth = async (req: Request, res: Response, next: NextFunctio
   }
 
   req.user = data.user
-  next() // 👈 обязательно вызвать next без возврата Response
+  next()
 }

@@ -11,9 +11,12 @@ import {
 
 const router = Router()
 
+// 🔓 Публичный эндпоинт
+router.get("/public", getAllSmoothies)
+
+// 🔐 Только для авторизованных
 router.use(requireAuth)
 
-router.get("/", getAllSmoothies)
 router.get("/my", requireAuth, getMySmoothies)
 router.get("/:id", requireAuth, getSmoothieById)
 router.post("/", requireAuth, createSmoothie)

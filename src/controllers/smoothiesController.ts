@@ -3,7 +3,21 @@ import { handleError } from "../common/handleError"
 import { Request, Response } from "express"
 
 export const getAllSmoothies = async (req: Request, res: Response) => {
+  const { data, error } = await supabase.from("smoothies").select().order("id", { ascending: false })
+
+  if (error) {
+    return handleError(res, error)
+  }
+
+  res.json(data)
+}
+
+export const getMySmoothies = async (req: Request, res: Response) => {
   const user = req.user
+
+  if (!user) {
+    return res.status(401).json({ error: "Unauthorized" })
+  }
 
   const { data, error } = await supabase
     .from("smoothies")

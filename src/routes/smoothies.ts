@@ -4,18 +4,20 @@ import {
   createSmoothie,
   deleteSmoothie,
   getAllSmoothies,
+  getMySmoothies,
   getSmoothieById,
   updateSmoothie,
 } from "../controllers/smoothiesController"
 
 const router = Router()
 
-router.use(requireAuth) // защита всех маршрутов
+router.use(requireAuth)
 
 router.get("/", getAllSmoothies)
-router.get("/:id", getSmoothieById)
-router.post("/", createSmoothie)
-router.put("/:id", updateSmoothie)
-router.delete("/:id", deleteSmoothie)
+router.get("/my", requireAuth, getMySmoothies)
+router.get("/:id", requireAuth, getSmoothieById)
+router.post("/", requireAuth, createSmoothie)
+router.put("/:id", requireAuth, updateSmoothie)
+router.delete("/:id", requireAuth, deleteSmoothie)
 
 export default router

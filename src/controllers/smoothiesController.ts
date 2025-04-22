@@ -1,55 +1,48 @@
+import { fetchSmoothies } from "../common/fetchSmoothies"
 import { supabase } from "../common/supabaseClient"
 import { handleError } from "../common/handleError"
 import { Request, Response } from "express"
 
 export const getAllSmoothies = async (req: Request, res: Response) => {
-  const { page = "1", limit = "10", search = "" } = req.query
+  const { page, limit, search } = req.query
 
-  const pageNumber = parseInt(page as string, 10)
-  const limitNumber = parseInt(limit as string, 10)
-  const from = (pageNumber - 1) * limitNumber
-  const to = from + limitNumber - 1
-
-  let query = supabase
-    .from("smoothies")
-    .select("*", { count: "exact" })
-    .order("id", { ascending: false })
-    .range(from, to)
-
-  if (search) {
-    query = query.ilike("title", `%${search}%`)
-  }
-
-  const { data, count, error } = await query
+  const { data, count, error } = await fetchSmoothies({
+    page: page as string,
+    limit: limit as string,
+    search: search as string,
+  })
 
   if (error) return handleError(res, error)
 
   res.json({
     totalCount: count ?? 0,
-    page: pageNumber,
-    limit: limitNumber,
+    page: parseInt((page as string) || "1", 10),
+    limit: parseInt((limit as string) || "10", 10),
     smoothies: data,
   })
 }
 
 export const getMySmoothies = async (req: Request, res: Response) => {
   const user = req.user
+  if (!user) return res.status(401).json({ error: "Unauthorized" })
 
-  if (!user) {
-    return res.status(401).json({ error: "Unauthorized" })
-  }
+  const { page, limit, search } = req.query
 
-  const { data, error } = await supabase
-    .from("smoothies")
-    .select()
-    .eq("user_id", user?.id)
-    .order("id", { ascending: false })
+  const { data, count, error } = await fetchSmoothies({
+    userId: user.id,
+    page: page as string,
+    limit: limit as string,
+    search: search as string,
+  })
 
-  if (error) {
-    return handleError(res, error)
-  }
+  if (error) return handleError(res, error)
 
-  res.json(data)
+  res.json({
+    totalCount: count ?? 0,
+    page: parseInt((page as string) || "1", 10),
+    limit: parseInt((limit as string) || "10", 10),
+    smoothies: data,
+  })
 }
 
 export const getSmoothieById = async (req: Request, res: Response) => {

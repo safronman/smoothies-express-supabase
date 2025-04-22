@@ -3,13 +3,33 @@ import { handleError } from "../common/handleError"
 import { Request, Response } from "express"
 
 export const getAllSmoothies = async (req: Request, res: Response) => {
-  const { data, error } = await supabase.from("smoothies").select().order("id", { ascending: false })
+  const { page = "1", limit = "10", search = "" } = req.query
 
-  if (error) {
-    return handleError(res, error)
+  const pageNumber = parseInt(page as string, 10)
+  const limitNumber = parseInt(limit as string, 10)
+  const from = (pageNumber - 1) * limitNumber
+  const to = from + limitNumber - 1
+
+  let query = supabase
+    .from("smoothies")
+    .select("*", { count: "exact" })
+    .order("id", { ascending: false })
+    .range(from, to)
+
+  if (search) {
+    query = query.ilike("title", `%${search}%`)
   }
 
-  res.json(data)
+  const { data, count, error } = await query
+
+  if (error) return handleError(res, error)
+
+  res.json({
+    totalCount: count ?? 0,
+    page: pageNumber,
+    limit: limitNumber,
+    smoothies: data,
+  })
 }
 
 export const getMySmoothies = async (req: Request, res: Response) => {

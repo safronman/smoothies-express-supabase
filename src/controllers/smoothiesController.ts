@@ -61,6 +61,8 @@ export const getSmoothieById = async (req: Request, res: Response) => {
 }
 
 export const createSmoothie = async (req: Request, res: Response) => {
+  const MAX_SMOOTHIES_COUNT = 50
+
   const { title, method, rating } = req.body
   const user = req.user
 
@@ -68,6 +70,21 @@ export const createSmoothie = async (req: Request, res: Response) => {
     return res.status(400).json({ error: "Missing required fields" })
   }
 
+  // Проверяем количество смузи, созданных пользователем
+  const { count, error: countError } = await supabase
+    .from("smoothies")
+    .select("*", { count: "exact", head: true }) // head: true означает "не возвращать сами данные"
+    .eq("user_id", user?.id)
+
+  if (countError) {
+    return handleError(res, countError)
+  }
+
+  if ((count ?? 0) >= MAX_SMOOTHIES_COUNT) {
+    return res.status(403).json({ error: "You can only create up to 10 smoothies" })
+  }
+
+  // Создаём новый смузи
   const { data, error } = await supabase
     .from("smoothies")
     .insert([{ title, method, rating, user_id: user?.id }])

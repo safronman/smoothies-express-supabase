@@ -66,3 +66,34 @@ export const signOutUser = async (req: Request, res: Response) => {
 
   res.status(200).json({ message: "Вы успешно вылогинились" })
 }
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+  const authHeader = req.headers.authorization
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(200).json({ user: null })
+  }
+
+  const token = authHeader.split(" ")[1]
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser(token)
+
+  if (error) {
+    return handleError(res, error)
+  }
+
+  if (!user) {
+    return res.status(200).json({ user: null })
+  }
+
+  res.status(200).json({
+    user: {
+      id: user.id,
+      email: user.email,
+      firstName: user.user_metadata?.first_name,
+    },
+  })
+}

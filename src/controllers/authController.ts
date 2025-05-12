@@ -49,11 +49,7 @@ export const signInUser = async (req: Request, res: Response) => {
   res.status(200).json({
     message: "Вы успешно залогинились",
     access_token: data.session?.access_token,
-    user: {
-      email: data.user?.email,
-      lastSignInAt: data.user?.last_sign_in_at,
-      firstName: data.user?.user_metadata.first_name,
-    },
+    user: { email: data.user?.email, firstName: data.user?.user_metadata.first_name },
   })
 }
 
@@ -90,10 +86,6 @@ export const getCurrentUser = async (req: Request, res: Response) => {
   }
 
   res.status(200).json({
-    user: {
-      id: user.id,
-      email: user.email,
-      firstName: user.user_metadata?.first_name,
-    },
+    user: { email: user.email, firstName: user.user_metadata?.first_name },
   })
 }

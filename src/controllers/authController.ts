@@ -3,13 +3,21 @@ import { handleError } from "../common/handleError"
 import { supabase } from "../common/supabaseClient"
 
 export const signUpUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body
+  const { email, password, firstName } = req.body
 
   if (!email || !password) {
     return res.status(400).json({ error: "Missing required fields" })
   }
 
-  const { data, error } = await supabase.auth.signUp({ email, password })
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        first_name: firstName,
+      },
+    },
+  })
 
   if (error) {
     return handleError(res, error)
@@ -20,6 +28,7 @@ export const signUpUser = async (req: Request, res: Response) => {
     user: {
       id: data.user?.id,
       email: data.user?.email,
+      firstName: data.user?.user_metadata.first_name,
     },
   })
 }
@@ -41,8 +50,9 @@ export const signInUser = async (req: Request, res: Response) => {
     message: "Вы успешно залогинились",
     access_token: data.session?.access_token,
     user: {
-      id: "ca29d841-8603-4da5-98dd-943b05bb4262",
-      email: "test4@test.com",
+      email: data.user?.email,
+      lastSignInAt: data.user?.last_sign_in_at,
+      firstName: data.user?.user_metadata.first_name,
     },
   })
 }

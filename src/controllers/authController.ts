@@ -4,7 +4,7 @@ import { supabase } from "../common/supabaseClient"
 
 /**
  * @openapi
- * /auth/signup:
+ * /api/signup:
  *   post:
  *     summary: Register a new user
  *     tags:
@@ -84,7 +84,7 @@ export const signUpUser = async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /auth/signin:
+ * /api/signin:
  *   post:
  *     summary: Login a user
  *     tags:
@@ -150,7 +150,7 @@ export const signInUser = async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /auth/signout:
+ * /api/signout:
  *   post:
  *     summary: Log out current user
  *     tags:
@@ -182,7 +182,7 @@ export const signOutUser = async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /auth/me:
+ * /api/me:
  *   get:
  *     summary: Get the currently authenticated user
  *     tags:

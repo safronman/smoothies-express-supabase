@@ -5,7 +5,7 @@ import { Request, Response } from "express"
 
 /**
  * @openapi
- * /smoothies:
+ * /api/smoothies/public:
  *   get:
  *     summary: Get all smoothies
  *     tags:
@@ -66,7 +66,7 @@ export const getAllSmoothies = async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /smoothies/my:
+ * /api/smoothies/my:
  *   get:
  *     summary: Get smoothies created by the logged-in user
  *     tags:
@@ -117,7 +117,7 @@ export const getMySmoothies = async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /smoothies/{id}:
+ * /api/smoothies/{id}:
  *   get:
  *     summary: Get a smoothie by ID
  *     tags:
@@ -151,7 +151,7 @@ export const getSmoothieById = async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /smoothies:
+ * /api/smoothies:
  *   post:
  *     summary: Create a new smoothie
  *     tags:
@@ -212,7 +212,7 @@ export const createSmoothie = async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /smoothies/{id}:
+ * /api/smoothies/{id}:
  *   put:
  *     summary: Update a smoothie
  *     tags:
@@ -278,7 +278,7 @@ export const updateSmoothie = async (req: Request, res: Response) => {
 
 /**
  * @openapi
- * /smoothies/{id}:
+ * /api/smoothies/{id}:
  *   delete:
  *     summary: Delete a smoothie
  *     tags:

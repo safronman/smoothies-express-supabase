@@ -7,8 +7,8 @@
   },
   "servers": [
     {
-      "url": "https://smoothies-express-supabase.onrender.com/",
-      "description": "Render deployment"
+      "url": "http://localhost:3000",
+      "description": "Local server"
     }
   ],
   "components": {
@@ -80,7 +80,7 @@
     }
   ],
   "paths": {
-    "/api/signup": {
+    "/auth/signup": {
       "post": {
         "summary": "Register a new user",
         "tags": [
@@ -151,7 +151,7 @@
         }
       }
     },
-    "/api/signin": {
+    "/auth/signin": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -218,7 +218,7 @@
         }
       }
     },
-    "/api/signout": {
+    "/auth/signout": {
       "post": {
         "summary": "Log out current user",
         "tags": [
@@ -251,7 +251,7 @@
         }
       }
     },
-    "/api/me": {
+    "/auth/me": {
       "get": {
         "summary": "Get the currently authenticated user",
         "tags": [
@@ -296,7 +296,7 @@
         }
       }
     },
-    "/api/smoothies": {
+    "/api/smoothies/public": {
       "get": {
         "summary": "Get all smoothies",
         "tags": [
@@ -357,42 +357,9 @@
             }
           }
         }
-      },
-      "post": {
-        "summary": "Create a new smoothie",
-        "tags": [
-          "Smoothies"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SmoothieInput"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Smoothie created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Smoothie"
-                }
-              }
-            }
-          }
-        }
       }
     },
-    "/api/smoothies/my": {
+    "/smoothies/my": {
       "get": {
         "summary": "Get smoothies created by the logged-in user",
         "tags": [
@@ -436,7 +403,7 @@
         }
       }
     },
-    "/api/smoothies/{id}": {
+    "/smoothies/{id}": {
       "get": {
         "summary": "Get a smoothie by ID",
         "tags": [
@@ -545,6 +512,41 @@
           },
           "404": {
             "description": "Smoothie not found"
+          }
+        }
+      }
+    },
+    "/smoothies": {
+      "post": {
+        "summary": "Create a new smoothie",
+        "tags": [
+          "Smoothies"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SmoothieInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Smoothie created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Smoothie"
+                }
+              }
+            }
           }
         }
       }

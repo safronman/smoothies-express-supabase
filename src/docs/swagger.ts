@@ -92,4 +92,4 @@ export const setupSwagger = (app: Express) => {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 }
 
-fs.writeFileSync("swagger.json", JSON.stringify(swaggerSpec, null, 2))
+fs.writeFileSync("swagger-docs/swagger.json", JSON.stringify(swaggerSpec, null, 2))

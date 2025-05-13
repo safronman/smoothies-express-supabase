@@ -6,6 +6,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "https://smoothies-express-supabase.onrender.com",
+  "https://smoothies-express-supabase.vercel.app",
 ]
 
 export const corsOptions: CorsOptions = {

@@ -6,6 +6,7 @@ import { corsOptions } from "./common/corsOptions"
 import { setupSwagger } from "./docs/swagger"
 import authRoutes from "./routes/auth"
 import smoothiesRoutes from "./routes/smoothies"
+import healthRoutes from "./routes/health"
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.use(express.json())
 // Routes
 app.use("/api/smoothies", smoothiesRoutes)
 app.use("/api", authRoutes)
+app.use("/api", healthRoutes)
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`)

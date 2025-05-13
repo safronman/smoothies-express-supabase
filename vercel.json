@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/api-docs/(.*)", "dest": "/swagger-docs/$1" },
-    { "src": "/(.*)", "dest": "/api/index.ts" }
-  ]
+  "outputDirectory": "swagger-docs"
 }
+

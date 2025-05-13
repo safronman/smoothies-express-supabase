@@ -13,8 +13,8 @@ const options: swaggerJSDoc.Options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
-        description: "Local server",
+        url: "https://smoothies-express-supabase.onrender.com",
+        description: "Render deployment",
       },
     ],
     components: {

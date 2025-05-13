@@ -7,6 +7,7 @@ import { Request, Response } from "express"
  *     summary: Check if the server is running
  *     tags:
  *       - Health
+ *     security: []
  *     responses:
  *       200:
  *         description: Server is up and running

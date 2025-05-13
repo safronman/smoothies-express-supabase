@@ -10,6 +10,7 @@ import { Request, Response } from "express"
  *     summary: Get all smoothies
  *     tags:
  *       - Smoothies
+ *     security: []
  *     parameters:
  *       - in: query
  *         name: page

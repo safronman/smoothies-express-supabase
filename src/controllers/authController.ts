@@ -101,10 +101,10 @@ export const signUpUser = async (req: Request, res: Response) => {
  *             properties:
  *               email:
  *                 type: string
- *                 example: user@example.com
+ *                 example: test6@test.com
  *               password:
  *                 type: string
- *                 example: securepassword123
+ *                 example: 123456
  *     responses:
  *       200:
  *         description: Successfully logged in

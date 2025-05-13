@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://smoothies-express-supabase.onrender.com",
+      "url": "https://smoothies-express-supabase.onrender.com/api/",
       "description": "Render deployment"
     }
   ],

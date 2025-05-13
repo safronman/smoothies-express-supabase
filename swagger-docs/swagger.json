@@ -80,7 +80,7 @@
     }
   ],
   "paths": {
-    "/auth/signup": {
+    "/api/signup": {
       "post": {
         "summary": "Register a new user",
         "tags": [
@@ -151,7 +151,7 @@
         }
       }
     },
-    "/auth/signin": {
+    "/api/signin": {
       "post": {
         "summary": "Login a user",
         "tags": [
@@ -218,7 +218,7 @@
         }
       }
     },
-    "/auth/signout": {
+    "/api/signout": {
       "post": {
         "summary": "Log out current user",
         "tags": [
@@ -251,7 +251,7 @@
         }
       }
     },
-    "/auth/me": {
+    "/api/me": {
       "get": {
         "summary": "Get the currently authenticated user",
         "tags": [
@@ -359,7 +359,7 @@
         }
       }
     },
-    "/smoothies/my": {
+    "/api/smoothies/my": {
       "get": {
         "summary": "Get smoothies created by the logged-in user",
         "tags": [
@@ -403,7 +403,7 @@
         }
       }
     },
-    "/smoothies/{id}": {
+    "/api/smoothies/{id}": {
       "get": {
         "summary": "Get a smoothie by ID",
         "tags": [
@@ -516,7 +516,7 @@
         }
       }
     },
-    "/smoothies": {
+    "/api/smoothies": {
       "post": {
         "summary": "Create a new smoothie",
         "tags": [

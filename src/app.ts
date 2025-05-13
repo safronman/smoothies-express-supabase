@@ -1,15 +1,18 @@
 import "./common/types"
+import cors from "cors"
 import dotenv from "dotenv"
-import express, { type Application } from "express"
+import express from "express"
 import { corsOptions } from "./common/corsOptions"
+import { setupSwagger } from "./docs/swagger"
 import authRoutes from "./routes/auth"
 import smoothiesRoutes from "./routes/smoothies"
-import cors from "cors"
 
 dotenv.config()
 
-const app: Application = express()
+const app = express()
 const port = process.env.PORT ? Number(process.env.PORT) : 3000
+
+setupSwagger(app)
 
 app.use(cors(corsOptions))
 app.use(express.json())

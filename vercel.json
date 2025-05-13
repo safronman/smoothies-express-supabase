@@ -1,5 +1,15 @@
 {
   "version": 2,
-  "outputDirectory": "swagger-docs"
+  "builds": [
+    {
+      "src": "api/index.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "api/index.ts"
+    }
+  ]
 }
-

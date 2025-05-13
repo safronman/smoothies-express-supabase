@@ -2,6 +2,7 @@ import swaggerJSDoc from "swagger-jsdoc"
 import swaggerUi from "swagger-ui-express"
 import { Express } from "express"
 import path from "path"
+import fs from "fs"
 
 const options: swaggerJSDoc.Options = {
   definition: {
@@ -90,3 +91,5 @@ const swaggerSpec = swaggerJSDoc(options)
 export const setupSwagger = (app: Express) => {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 }
+
+fs.writeFileSync("swagger.json", JSON.stringify(swaggerSpec, null, 2))

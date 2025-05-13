@@ -1,19 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/index.ts",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
-    {
-      "src": "/api-docs/(.*)",
-      "dest": "/swagger-docs/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/api/index.ts"
-    }
+    { "src": "/api-docs/(.*)", "dest": "/swagger-docs/$1" },
+    { "src": "/(.*)", "dest": "/api/index.ts" }
   ]
 }

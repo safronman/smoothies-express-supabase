@@ -7,8 +7,8 @@
   },
   "servers": [
     {
-      "url": "https://smoothies-express-supabase.onrender.com",
-      "description": "Render deployment"
+      "url": "http://localhost:3000",
+      "description": "Local server"
     }
   ],
   "components": {

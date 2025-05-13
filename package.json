@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon --watch './**/*.ts' --exec ts-node src/app.ts",
-    "build": "tsc",
+    "build-swagger": "ts-node generate-swagger.ts",
+    "build": "tsc && pnpm build-swagger",
     "start": "node dist/app.js"
   },
   "dependencies": {

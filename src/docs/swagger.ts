@@ -1,8 +1,7 @@
-import swaggerJSDoc from "swagger-jsdoc"
-import swaggerUi from "swagger-ui-express"
 import { Express } from "express"
 import path from "path"
-import fs from "fs"
+import swaggerJSDoc from "swagger-jsdoc"
+import swaggerUi from "swagger-ui-express"
 
 const options: swaggerJSDoc.Options = {
   definition: {
@@ -86,10 +85,8 @@ const options: swaggerJSDoc.Options = {
   apis: [path.resolve(__dirname, "../controllers/*.ts")],
 }
 
-const swaggerSpec = swaggerJSDoc(options)
+export const swaggerSpec = swaggerJSDoc(options)
 
 export const setupSwagger = (app: Express) => {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 }
-
-fs.writeFileSync("swagger-docs/swagger.json", JSON.stringify(swaggerSpec, null, 2))
